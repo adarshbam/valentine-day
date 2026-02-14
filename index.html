@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>For My Valentine 💖</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* 
+         * VALENTINE'S SCROLL JOURNEY
+         * Theme: Soft, Romantic, Glowing Path
+         */
+
+      :root {
+        --primary-color: #ff4d6d;
+        --secondary-color: #ff8fa3;
+        --bg-color: #fff0f3;
+        --text-color: #590d22;
+        --accent-color: #c9184a;
+        --glass-bg: rgba(255, 255, 255, 0.7);
+        --glass-border: rgba(255, 255, 255, 0.5);
+        --modal-overlay: rgba(0, 0, 0, 0.5);
+        --path-color: rgba(255, 77, 109, 0.2);
+        --path-glow: #ff4d6d;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #fff0f3 0%, #ffe5ec 100%);
+        color: var(--text-color);
+        overflow: hidden; /* Hide body scroll, use container */
+        height: 100vh;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: "Dancing Script", cursive;
+      }
+
+      /* Floating Hearts Background */
+      .hearts-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .heart {
+        position: absolute;
+        bottom: -50px;
+        background-color: rgba(255, 77, 109, 0.5);
+        display: inline-block;
+        height: 30px;
+        margin: 0 10px;
+        top: -50px;
+        width: 30px;
+        transform: rotate(-45deg);
+        animation: float 6s linear infinite;
+      }
+
+      .heart:before,
+      .heart:after {
+        content: "";
+        background-color: inherit;
+        border-radius: 50%;
+        height: 30px;
+        position: absolute;
+        width: 30px;
+      }
+
+      .heart:before {
+        top: -15px;
+        left: 0;
+      }
+      .heart:after {
+        left: 15px;
+        top: 0;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(110vh) rotate(-45deg) scale(0.5);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-10vh) rotate(-45deg) scale(1.2);
+          opacity: 0;
+        }
+      }
+
+      /* Language Toggle */
+      .lang-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: white;
+        padding: 5px 15px;
+        border-radius: 30px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        font-size: 0.9rem;
+        cursor: pointer;
+        border: 1px solid var(--secondary-color);
+        color: var(--text-color);
+        transition: all 0.3s;
+      }
+      .lang-toggle:hover {
+        background: var(--bg-color);
+      }
+
+      /* --- JOURNEY CONTAINER --- */
+      .journey-container {
+        position: relative;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* Glowing Path SVG */
+      .path-svg {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 100%;
+        z-index: 1;
+        overflow: visible;
+      }
+
+      /* Scroll Snap Sections */
+      .scroll-container {
+        height: 100vh;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+        position: relative;
+        z-index: 2;
+      }
+
+      section {
+        height: 100vh;
+        width: 100%;
+        scroll-snap-align: start;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        /* Padding to not overlap path on mobile if needed */
+      }
+
+      .fade-in {
+        animation: fadeIn 1.5s ease-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* HERO CARD */
+      .hero-card {
+        text-align: center;
+        background: var(--glass-bg);
+        padding: 40px;
+        border-radius: 30px;
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 10px 40px rgba(255, 77, 109, 0.1);
+        backdrop-filter: blur(10px);
+        max-width: 90%;
+        width: 600px;
+        margin: 0 20px;
+      }
+
+      .hero-card img {
+        width: 200px;
+        height: auto;
+        margin-bottom: 20px;
+        border-radius: 15px;
+      }
+
+      .hero-card h1 {
+        font-size: 3rem; /* Adjusted for image fit */
+        color: var(--accent-color);
+        margin-bottom: 20px;
+      }
+
+      .hero-card p {
+        font-size: 1.2rem;
+        color: #555;
+      }
+
+      /* MILESTONE CARDS */
+      .milestone-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      .milestone-card {
+        width: 42%; /* Slightly smaller for better fit */
+        background: var(--glass-bg);
+        padding: 25px;
+        border-radius: 20px;
+        border: 2px solid transparent;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        backdrop-filter: blur(8px);
+        transition: all 0.6s ease-out;
+        opacity: 0.3; /* visible but dim initially */
+        transform: translateY(30px) scale(0.95);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* Alternating Layout */
+      .milestone-wrapper.left .milestone-card {
+        margin-right: 50%; /* Push to left */
+        border-right: 4px solid transparent;
+      }
+      .milestone-wrapper.right .milestone-card {
+        margin-left: 50%; /* Push to right */
+        border-left: 4px solid transparent;
+      }
+
+      /* Active State for Milestone */
+      .milestone-card.active {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        border-color: var(--path-glow);
+        box-shadow: 0 15px 40px rgba(255, 77, 109, 0.15);
+      }
+
+      .milestone-wrapper.active .milestone-card {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        border-color: var(--path-glow);
+        box-shadow: 0 15px 40px rgba(255, 77, 109, 0.15);
+      }
+
+      /* Single GIF styling */
+      .milestone-card .gif-container.single {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+      }
+      .milestone-card .gif-container.single img {
+        max-width: 100%;
+        height: auto;
+        max-height: 200px;
+        border-radius: 15px;
+        /* box-shadow: 0 5px 15px rgba(0,0,0,0.1); */ /* Optional shadow */
+      }
+
+      /* Double GIF styling */
+      .milestone-card .gif-container.double {
+        width: 100%;
+        display: flex;
+        justify-content: center; /* Center the pair */
+        gap: 10px;
+        margin-bottom: 15px;
+        flex-direction: row; /* FORCE ROW */
+      }
+      .milestone-card .gif-container.double img {
+        width: 48%; /* Fit side by side */
+        height: auto;
+        max-height: 150px;
+        border-radius: 15px;
+        object-fit: cover;
+      }
+
+      .milestone-card h3 {
+        font-size: 1.5rem;
+        color: var(--accent-color);
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .milestone-card p {
+        font-size: 1rem;
+        line-height: 1.4;
+        text-align: center;
+      }
+
+      /* Path Dot */
+      .path-dot {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 15px;
+        height: 15px;
+        background: #fff;
+        border: 2px solid var(--secondary-color);
+        border-radius: 50%;
+        z-index: 3;
+        transition: all 0.5s;
+        box-shadow: 0 0 10px rgba(255, 77, 109, 0.3);
+      }
+
+      .milestone-wrapper.active .path-dot {
+        background: var(--path-glow);
+        transform: translate(-50%, -50%) scale(1.5);
+        box-shadow: 0 0 20px var(--path-glow);
+        border-color: white;
+      }
+
+      /* FINAL PROPOSAL SECTION */
+      .final-card {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.85);
+        padding: 30px;
+        border-radius: 40px;
+        box-shadow: 0 20px 60px rgba(255, 77, 109, 0.2);
+        max-width: 700px;
+        width: 90%;
+        border: 1px solid white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .final-gif {
+        width: 250px;
+        height: auto;
+        margin-bottom: 20px;
+        border-radius: 20px;
+      }
+
+      .final-card h2 {
+        font-size: 3rem;
+        color: var(--accent-color);
+        margin-bottom: 20px;
+        text-shadow: 0 2px 10px rgba(255, 77, 109, 0.2);
+        line-height: 1.2;
+      }
+
+      .buttons-container {
+        position: relative;
+        height: 100px; /* Reduced height as user wants buttons below text */
+        width: 100%;
+        display: flex; /* Use flex for centering if needed */
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+      }
+      /* But user also wanted special playful movement for NO button */
+      /* So relative container is good for absolute positioning inside it, or just use fixed/absolute strategies */
+
+      .btn {
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        background: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--accent-color)
+        );
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        z-index: 10;
+        /* Position handled by container or absolute */
+        position: absolute;
+      }
+
+      #yes-btn {
+        left: 35%; /* Adjust for side by side */
+        transform: translateX(-50%);
+      }
+
+      #no-btn {
+        left: 65%; /* Adjust for side by side */
+        transform: translateX(-50%);
+        background: #adb5bd;
+        z-index: 20;
+      }
+
+      /* Modal */
+      #modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--modal-overlay);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      #modal-overlay.show {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        max-width: 90%;
+        width: 400px;
+        transform: scale(0.8);
+        transition: transform 0.3s;
+      }
+      #modal-overlay.show .modal-content {
+        transform: scale(1);
+      }
+      .modal-btn {
+        background: var(--secondary-color);
+        color: white;
+        padding: 10px 30px;
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .milestone-wrapper.left .milestone-card,
+        .milestone-wrapper.right .milestone-card {
+          margin: 0;
+          width: 90%; /* Wider on mobile */
+          z-index: 5;
+        }
+        .path-svg {
+          opacity: 0.2; /* Fade path on mobile */
+        }
+        .path-dot {
+          display: none; /* Hide dots on mobile */
+        }
+        .hero-card h1 {
+          font-size: 2.2rem;
+        }
+        .final-card h2 {
+          font-size: 2rem;
+        }
+
+        /* Adjust buttons for mobile width */
+        #yes-btn {
+          left: 30%;
+        }
+        #no-btn {
+          left: 70%;
+        }
+
+        /* Double GIF sizing on mobile */
+        .milestone-card .gif-container.double img {
+          height: auto;
+          max-height: 100px; /* Smaller on mobile */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Language Toggle -->
+    <button class="lang-toggle" id="lang-btn">English | Hinglish</button>
+
+    <!-- Floating Hearts -->
+    <div class="hearts-container" id="hearts-bg"></div>
+
+    <!-- Modal -->
+    <div id="modal-overlay">
+      <div class="modal-content">
+        <h3
+          id="modal-text"
+          style="
+            color: var(--accent-color);
+            font-family: &quot;Dancing Script&quot;;
+            font-size: 2rem;
+            margin-bottom: 20px;
+          "
+        >
+          Msg
+        </h3>
+        <button class="modal-btn" onclick="closeModal()">Okay 🥺</button>
+      </div>
+    </div>
+
+    <!-- SCROLL CONTAINER -->
+    <div class="scroll-container" id="scroll-container">
+      <!-- MAIN JOURNEY WRAPPER -->
+      <div class="journey-container">
+        <!-- SVG Path Line -->
+        <svg class="path-svg">
+          <line
+            x1="50%"
+            y1="0"
+            x2="50%"
+            y2="100%"
+            stroke="rgba(255, 77, 109, 0.2)"
+            stroke-width="4"
+          />
+          <line
+            id="active-path"
+            x1="50%"
+            y1="0"
+            x2="50%"
+            y2="0"
+            stroke="#ff4d6d"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+        </svg>
+
+        <!-- 1. Hero Section -->
+        <section>
+          <div class="hero-card fade-in">
+            <img src="./gifs/let's-go-on-journey.gif" alt="Journey Start" />
+            <h1 id="hero-title">
+              Let's go on a beautiful journey together ✨💖
+            </h1>
+            <p id="hero-sub">Scroll slowly...</p>
+          </div>
+        </section>
+
+        <!-- Milestones injected here -->
+        <div id="milestones-container"></div>
+
+        <!-- Final Proposal Section -->
+        <section>
+          <div class="final-card">
+            <img
+              src="./gifs/will-you-my-valentine.gif"
+              alt="Final Proposal"
+              class="final-gif"
+            />
+            <h2 id="final-q">Will you be my Valentine? 🌹</h2>
+            <div class="buttons-container">
+              <button class="btn" id="yes-btn">YES 💖</button>
+              <button class="btn" id="no-btn">NO 🙈</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script>
+      // --- DATA ---
+      const content = {
+        en: {
+          heroTitle: "Let's go on a beautiful journey together ✨💖",
+          heroSub: "Scroll slowly...",
+          finalQ: "Will you be my Valentine? 🌹",
+          yesBtn: "YES 💖",
+          noBtn: "NO 🙈",
+          milestones: [
+            {
+              title: "The First Smile",
+              text: "The moment I saw you smile, I knew my world was about to change forever.",
+              gifs: ["./gifs/your-first-smile.gif"],
+            },
+            {
+              title: "Late Night Talks",
+              text: "Hours felt like minutes. I just didn't want to hang up.",
+              gifs: ["./gifs/dudu-late-night-call.gif"],
+            },
+            {
+              title: "Special Memories",
+              text: "Freezing time with you is my favorite hobby.",
+              gifs: ["./gifs/special-moment.gif"],
+            },
+            {
+              title: "The Way We Laugh",
+              text: "It’s the most beautiful melody I’ve ever heard.",
+              gifs: ["./gifs/dudu-laughing.gif", "./gifs/bubu-laughing.gif"], // Pair
+            },
+            {
+              title: "Comfort & Cuddles",
+              text: "Being with you feels like coming home.",
+              gifs: ["./gifs/goodnight-cuddle-comfort-we-share.gif"],
+            },
+            {
+              title: "Your Beautiful Smile",
+              text: "Every time you smile, my heart skips a beat.",
+              gifs: ["./gifs/the-way-you-smile.gif"], // Mapped to way-you-smile
+            },
+            {
+              title: "Growing Together",
+              text: "Every day, we become better versions of ourselves, together.",
+              gifs: [
+                "./gifs/dudu-growing-together.gif",
+                "./gifs/bubu-growing-together.gif",
+              ], // Pair
+            },
+          ],
+        },
+        hi: {
+          heroTitle: "Chalo ek khoobsurat safar pe chalein ✨💖",
+          heroSub: "Dheere scroll karna...",
+          finalQ: "Kya tum meri Valentine banogi? 🌹",
+          yesBtn: "HAAN 💖",
+          noBtn: "NAHI 🙈",
+          milestones: [
+            {
+              title: "Pehli Muskaan",
+              text: "Jab maine tumhe pehli baar muskurate dekha, duniya badal gayi.",
+              gifs: ["./gifs/your-first-smile.gif"],
+            },
+            {
+              title: "Wo Raat Ki Baatein",
+              text: "Ghanto baatein karke bhi mann nahi bharta tha.",
+              gifs: ["./gifs/dudu-late-night-call.gif"],
+            },
+            {
+              title: "Ek Khaas Yaad",
+              text: "Tumhare saath waqt rokna mera favorite kaam hai.",
+              gifs: ["./gifs/special-moment.gif"],
+            },
+            {
+              title: "Humari Hasi",
+              text: "Duniya ka sabse pyaara music tumhari hasi hai.",
+              gifs: ["./gifs/dudu-laughing.gif", "./gifs/bubu-laughing.gif"],
+            },
+            {
+              title: "Sukoon",
+              text: "Tumhare paas hona, ghar jaisa lagta hai.",
+              gifs: ["./gifs/goodnight-cuddle-comfort-we-share.gif"],
+            },
+            {
+              title: "Tumhari Muskaan",
+              text: "Jab bhi tum hasti ho, dil khush ho jata hai.",
+              gifs: ["./gifs/the-way-you-smile.gif"],
+            },
+            {
+              title: "Ek Saath Badhna",
+              text: "Har roz hum ek saath behtar ban rahe hain.",
+              gifs: [
+                "./gifs/dudu-growing-together.gif",
+                "./gifs/bubu-growing-together.gif",
+              ],
+            },
+          ],
+        },
+      };
+
+      const noMessages = [
+        "Would you reconsider? 🥺💭",
+        "Please say yes 🥺🐶",
+        "Don't break my heart 💔😢",
+        "Ek baar aur socho na 😩💕",
+        "My heart is fragile 😭💘",
+      ];
+
+      // --- STATE & AUDIO ---
+      let currentLang = "en";
+      let musicStarted = false;
+      const audioEn = new Audio("music/perfect.mp3");
+      const audioHi = new Audio("music/labmi-raat.mp3");
+      audioEn.loop = true;
+      audioHi.loop = true;
+
+      // --- DOM ELEMENTS ---
+      const scrollContainer = document.getElementById("scroll-container");
+      const milestonesContainer = document.getElementById(
+        "milestones-container",
+      );
+      const activePathLine = document.getElementById("active-path");
+      const langBtn = document.getElementById("lang-btn");
+      const modalOverlay = document.getElementById("modal-overlay");
+      const modalText = document.getElementById("modal-text");
+      const finalQ = document.getElementById("final-q");
+      const yesBtn = document.getElementById("yes-btn");
+      const noBtn = document.getElementById("no-btn");
+
+      // --- BUILD UI ---
+      function renderMilestones() {
+        milestonesContainer.innerHTML = "";
+        content[currentLang].milestones.forEach((m, i) => {
+          const section = document.createElement("section");
+          // Alternate left / right
+          const side = i % 2 === 0 ? "left" : "right";
+
+          // Generate GIF HTML logic
+          let gifHtml = "";
+          if (m.gifs.length === 1) {
+            gifHtml = `<div class="gif-container single"><img src="${m.gifs[0]}" alt="Milestone GIF"></div>`;
+          } else {
+            // Pair logic: Dudu left, Bubu right
+            gifHtml = `<div class="gif-container double">
+                            <img src="${m.gifs[0]}" alt="Dudu">
+                            <img src="${m.gifs[1]}" alt="Bubu">
+                         </div>`;
+          }
+
+          section.innerHTML = `
+                <div class="milestone-wrapper ${side}" id="ms-${i}">
+                    <div class="path-dot"></div>
+                    <div class="milestone-card">
+                        ${gifHtml}
+                        <h3>${m.title}</h3>
+                        <p>${m.text}</p>
+                    </div>
+                </div>
+            `;
+          milestonesContainer.appendChild(section);
+        });
+
+        // Re-attach observer to new elements
+        setTimeout(setupObserver, 100);
+      }
+
+      function updateText() {
+        const t = content[currentLang];
+        document.getElementById("hero-title").textContent = t.heroTitle;
+        document.getElementById("hero-sub").textContent = t.heroSub;
+        finalQ.textContent = t.finalQ;
+        yesBtn.textContent = t.yesBtn;
+        noBtn.textContent = t.noBtn;
+        langBtn.textContent =
+          currentLang === "en" ? "English | Hinglish" : "Hinglish | English";
+        renderMilestones();
+      }
+
+      // --- SCROLL PATH ANIMATION ---
+      function updateScrollPath() {
+        const totalHeight =
+          scrollContainer.scrollHeight - scrollContainer.clientHeight;
+        const scrollProgress = scrollContainer.scrollTop;
+
+        if (totalHeight > 0) {
+          // Calculate % scrolled
+          const percentage = Math.min(scrollProgress / totalHeight, 1);
+          activePathLine.setAttribute("y2", `${percentage * 100}%`);
+        }
+
+        requestAnimationFrame(updateScrollPath);
+      }
+
+      // --- INTERSECTION OBSERVER ---
+      let observer;
+      function setupObserver() {
+        if (observer) observer.disconnect();
+
+        observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                // Find the wrapper inside the section
+                const wrapper =
+                  entry.target.querySelector(".milestone-wrapper");
+                if (wrapper) {
+                  wrapper.classList.add("active");
+                  initAudio();
+                }
+              } else {
+                const wrapper =
+                  entry.target.querySelector(".milestone-wrapper");
+                if (wrapper) wrapper.classList.remove("active");
+              }
+            });
+          },
+          { threshold: 0.5 },
+        );
+
+        document
+          .querySelectorAll("#milestones-container section")
+          .forEach((sec) => {
+            observer.observe(sec);
+          });
+      }
+
+      // --- AUDIO LOGIC ---
+      function initAudio() {
+        if (musicStarted) return;
+
+        const track = currentLang === "en" ? audioEn : audioHi;
+        track.volume = 0.5;
+
+        // Simple play attempt
+        const playPromise = track.play();
+
+        if (playPromise !== undefined) {
+          playPromise
+            .then((_) => {
+              musicStarted = true;
+            })
+            .catch((error) => {
+              console.log("Auto-play blocked");
+            });
+        }
+      }
+
+      function toggleLang() {
+        currentLang = currentLang === "en" ? "hi" : "en";
+        // Switch audio
+        if (musicStarted) {
+          if (currentLang === "en") {
+            audioHi.pause();
+            audioEn.play();
+          } else {
+            audioEn.pause();
+            audioHi.play();
+          }
+        }
+        updateText();
+      }
+
+      // --- NO BUTTON LOGIC ---
+      function moveNoBtn() {
+        // Random within viewport
+        // Ensure it doesn't go off screen
+        const btnW = noBtn.offsetWidth || 100;
+        const btnH = noBtn.offsetHeight || 50;
+
+        // Use window inner dimensions but keep visible
+        const x = Math.random() * (window.innerWidth - btnW - 40) + 20;
+        const y = Math.random() * (window.innerHeight - btnH - 40) + 20;
+
+        noBtn.style.position = "fixed";
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+        noBtn.style.transform = "none"; // Remove center transform
+      }
+
+      function handleNoClick(e) {
+        e.preventDefault();
+        moveNoBtn();
+        const msg = noMessages[Math.floor(Math.random() * noMessages.length)];
+        modalText.textContent = msg;
+        modalOverlay.classList.add("show");
+      }
+
+      function closeModal() {
+        modalOverlay.classList.remove("show");
+      }
+
+      function celebrateYes() {
+        // Burst hearts
+        for (let i = 0; i < 50; i++) {
+          const heart = document.createElement("div");
+          heart.innerHTML = "💖";
+          heart.style.position = "fixed";
+          heart.style.left = "50%";
+          heart.style.top = "50%";
+          heart.style.fontSize = Math.random() * 20 + 20 + "px";
+          heart.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
+          heart.style.transition = "all 1s ease-out";
+          heart.style.zIndex = 3000;
+          document.body.appendChild(heart);
+
+          setTimeout(() => {
+            const x = (Math.random() - 0.5) * window.innerWidth;
+            const y = (Math.random() - 0.5) * window.innerHeight;
+            heart.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random() * 360}deg)`;
+            heart.style.opacity = 0;
+          }, 50);
+
+          setTimeout(() => heart.remove(), 1000);
+        }
+
+        // Show alert/message
+        setTimeout(() => {
+          modalText.innerHTML =
+            "I knew it! I Love you so much! <br>💖 BuBu 💖<br>Happy Valentine's Day!";
+          modalOverlay.classList.add("show");
+        }, 1000);
+      }
+
+      function createHearts() {
+        const c = document.getElementById("hearts-bg");
+        for (let i = 0; i < 20; i++) {
+          const h = document.createElement("div");
+          h.className = "heart";
+          h.style.left = Math.random() * 100 + "vw";
+          h.style.animationDelay = Math.random() * 5 + "s";
+          c.appendChild(h);
+        }
+      }
+
+      // --- EVENTS ---
+      langBtn.addEventListener("click", toggleLang);
+      noBtn.addEventListener("mouseover", moveNoBtn);
+      noBtn.addEventListener("click", handleNoClick);
+      yesBtn.addEventListener("click", celebrateYes);
+
+      scrollContainer.addEventListener("scroll", () =>
+        requestAnimationFrame(updateScrollPath),
+      );
+
+      // --- INIT ---
+      createHearts();
+      updateText();
+      requestAnimationFrame(updateScrollPath);
+
+      // Global click to try init audio
+      document.body.addEventListener("click", initAudio, { once: true });
+    </script>
+  </body>
+</html>
