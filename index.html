@@ -652,7 +652,7 @@
     <script>
       // --- DATA ---
       const content = {
-        en: {
+        english: {
           heroTitle: "Let's go on a beautiful journey together ✨💖",
           heroSub: "Scroll slowly...",
           finalQ: "Will you be my Valentine? 🌹",
@@ -698,8 +698,21 @@
               ], // Pair
             },
           ],
+          noMessages: [
+            "Would you reconsider? 🥺💭",
+            "Please say yes 🥺🐶",
+            "Don't break my heart 💔😢",
+            "Ek baar aur socho na 😩💕",
+            "My heart is fragile 😭💘",
+          ],
+          yesModal: {
+            text1: "I knew it! I love you so much! 💖",
+            text2: "BuBu 💖",
+            text3: "Happy Valentine's Day!",
+            btn: "Okay 🥺",
+          },
         },
-        hi: {
+        hinglish: {
           heroTitle: "Chalo ek khoobsurat safar pe chalein ✨💖",
           heroSub: "Dheere scroll karna...",
           finalQ: "Kya tum meri Valentine banogi? 🌹",
@@ -745,21 +758,26 @@
               ],
             },
           ],
+          noMessages: [
+            "Phir se sochogi na? 🥺💭",
+            "Please haan bol do na 🥺🐶",
+            "Dil tod dogi kya sach mein? 💔😢",
+            "Ek baar aur socho na yaar 😩💕",
+            "Mera dil itna strong nahi hai 😭💘",
+          ],
+          yesModal: {
+            text1: "Mujhe pata tha! Main tumse bohot pyaar karta hoon! 💖",
+            text2: "BuBu 💖",
+            text3: "Happy Valentine's Day meri jaan!",
+            btn: "Theek hai 🥺",
+          },
         },
       };
-
-      const noMessages = [
-        "Would you reconsider? 🥺💭",
-        "Please say yes 🥺🐶",
-        "Don't break my heart 💔😢",
-        "Ek baar aur socho na 😩💕",
-        "My heart is fragile 😭💘",
-      ];
 
       let lastNoMsgIndex = -1;
 
       // --- STATE & AUDIO ---
-      let currentLang = "en";
+      let currentLang = "english";
       let musicStarted = false;
       const audioEn = new Audio("music/perfect.mp3");
       const audioHi = new Audio("music/labmi-raat.mp3");
@@ -824,8 +842,13 @@
         yesBtn.textContent = t.yesBtn;
         noBtn.textContent = t.noBtn;
         langBtn.textContent =
-          currentLang === "en" ? "English | Hinglish" : "Hinglish | English";
+          currentLang === "english"
+            ? "English | Hinglish"
+            : "Hinglish | English";
         renderMilestones();
+
+        // Note: Modal text updates dynamically when opened, but if open, ideally update it.
+        // Assuming modal is not open during switch, but if we wanted to be robust, we could re-render modal if visible.
       }
 
       // --- SCROLL PATH ANIMATION ---
@@ -880,7 +903,7 @@
       function initAudio() {
         if (musicStarted) return;
 
-        const track = currentLang === "en" ? audioEn : audioHi;
+        const track = currentLang === "english" ? audioEn : audioHi;
         track.volume = 0.5;
 
         // Simple play attempt
@@ -898,10 +921,10 @@
       }
 
       function toggleLang() {
-        currentLang = currentLang === "en" ? "hi" : "en";
+        currentLang = currentLang === "english" ? "hinglish" : "english";
         // Switch audio
         if (musicStarted) {
-          if (currentLang === "en") {
+          if (currentLang === "english") {
             audioHi.pause();
             audioEn.play();
           } else {
@@ -931,14 +954,16 @@
 
       // --- NEW TOAST LOGIC ---
       function showNoToast() {
+        const msgs = content[currentLang].noMessages;
+
         // Select Random Message (No Repeats)
         let newIndex;
         do {
-          newIndex = Math.floor(Math.random() * noMessages.length);
-        } while (newIndex === lastNoMsgIndex && noMessages.length > 1);
+          newIndex = Math.floor(Math.random() * msgs.length);
+        } while (newIndex === lastNoMsgIndex && msgs.length > 1);
 
         lastNoMsgIndex = newIndex;
-        const msg = noMessages[newIndex];
+        const msg = msgs[newIndex];
 
         // Create Toast Element
         const toast = document.createElement("div");
@@ -981,6 +1006,7 @@
         createHeartBurst();
 
         // Step 1: Celebration Modal with Kissing GIFs
+        const c = content[currentLang].yesModal;
 
         modalInner.innerHTML = `
             <div class="modal-kiss-container">
@@ -988,13 +1014,13 @@
                 <img src="./gifs/bubu-giving-kisses-after-yes.gif" alt="Kissing Right">
             </div>
             <h3 style="color: var(--accent-color); font-family: 'Dancing Script'; font-size: 2rem; margin-bottom: 10px;">
-                I knew it! I love you so much! 💖
+                ${c.text1}
             </h3>
             <h3 style="color: var(--accent-color); font-family: 'Dancing Script'; font-size: 1.8rem; margin-bottom: 10px;">
-                 BuBu 💖
+                 ${c.text2}
             </h3>
-            <p style="font-size: 1.2rem; margin-bottom: 20px;">Happy Valentine's Day!</p>
-            <button class="modal-btn" onclick="transformToFinalCelebration()">Okay 🥺</button>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">${c.text3}</p>
+            <button class="modal-btn" onclick="transformToFinalCelebration()">${c.btn}</button>
           `;
 
         modalOverlay.classList.add("show");
