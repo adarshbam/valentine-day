@@ -966,6 +966,7 @@
 
       function handleNoClick(e) {
         e.preventDefault();
+        console.log("No clicked");
         moveNoBtn();
         showNoToast(); // Updated Logic: No more blocking modal
       }
@@ -1051,7 +1052,11 @@
 
       // --- EVENTS ---
       langBtn.addEventListener("click", toggleLang);
-      noBtn.addEventListener("mouseover", moveNoBtn);
+      noBtn.addEventListener("mouseover", () =>
+        setTimeout(() => {
+          moveNoBtn();
+        }, 100),
+      );
       noBtn.addEventListener("click", handleNoClick);
       yesBtn.addEventListener("click", showYesCelebration);
 
