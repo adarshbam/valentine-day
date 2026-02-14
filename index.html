@@ -482,6 +482,62 @@
         margin-top: 20px;
       }
 
+      /* --- TOAST NOTIFICATION STYLES (NEW) --- */
+      .no-toast {
+        position: fixed;
+        top: 20px; /* Top center */
+        left: 50%;
+        transform: translateX(-50%) translateY(-20px) scale(0.8);
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        padding: 15px 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        z-index: 3000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        opacity: 0;
+        pointer-events: auto; /* Allow interaction if needed, but non-blocking to rest of page */
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        border: 1px solid rgba(255, 77, 109, 0.2);
+        max-width: 90%;
+        width: 300px;
+      }
+
+      .no-toast.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+      }
+
+      .toast-msg {
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        color: var(--accent-color);
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+      }
+
+      .toast-gif {
+        width: 100px;
+        height: auto;
+        border-radius: 10px;
+        animation: gentlePulse 2s infinite ease-in-out;
+      }
+
+      @keyframes gentlePulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
       /* Responsive */
       @media (max-width: 768px) {
         .milestone-wrapper.left .milestone-card,
@@ -522,6 +578,11 @@
           height: auto;
           max-height: 100px;
         }
+
+        .no-toast {
+          width: 80%;
+          padding: 10px 20px;
+        }
       }
     </style>
   </head>
@@ -532,7 +593,7 @@
     <!-- Floating Hearts -->
     <div class="hearts-container" id="hearts-bg"></div>
 
-    <!-- Modal -->
+    <!-- Modal (ONLY FOR YES NOW) -->
     <div id="modal-overlay">
       <div class="modal-content" id="modal-inner">
         <!-- Content will be injected dynamically via JS -->
@@ -703,6 +764,8 @@
         "Ek baar aur socho na 😩💕",
         "My heart is fragile 😭💘",
       ];
+
+      let lastNoMsgIndex = -1;
 
       // --- STATE & AUDIO ---
       let currentLang = "en";
@@ -875,20 +938,45 @@
         noBtn.style.transform = "none"; // Remove center transform
       }
 
+      // --- NEW TOAST LOGIC ---
+      function showNoToast() {
+        // Select Random Message (No Repeats)
+        let newIndex;
+        do {
+          newIndex = Math.floor(Math.random() * noMessages.length);
+        } while (newIndex === lastNoMsgIndex && noMessages.length > 1);
+
+        lastNoMsgIndex = newIndex;
+        const msg = noMessages[newIndex];
+
+        // Create Toast Element
+        const toast = document.createElement("div");
+        toast.className = "no-toast";
+        toast.innerHTML = `
+              <div class="toast-msg">${msg}</div>
+              <img src="./gifs/dudu-crying.gif" alt="Crying" class="toast-gif">
+          `;
+
+        document.body.appendChild(toast);
+
+        // Trigger Animation
+        requestAnimationFrame(() => {
+          toast.classList.add("show");
+        });
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => {
+            toast.remove();
+          }, 500); // Wait for transition out
+        }, 3000);
+      }
+
       function handleNoClick(e) {
         e.preventDefault();
         moveNoBtn();
-        const msg = noMessages[Math.floor(Math.random() * noMessages.length)];
-
-        // Standard modal for "No"
-        modalInner.innerHTML = `
-            <h3 style="color: var(--accent-color); font-family: 'Dancing Script'; font-size: 2rem; margin-bottom: 20px;">
-                ${msg}
-            </h3>
-            <button class="modal-btn" onclick="closeModal()">Okay 🥺</button>
-        `;
-
-        modalOverlay.classList.add("show");
+        showNoToast(); // Updated Logic: No more blocking modal
       }
 
       function closeModal() {
@@ -901,8 +989,6 @@
         createHeartBurst();
 
         // Step 1: Celebration Modal with Kissing GIFs
-        // Using bubu-giving-kisses-after-yes.gif twice since user asked for the same filename for left/right
-        // or implies left/right are same. If a dudu version existed, I would use that too.
 
         modalInner.innerHTML = `
             <div class="modal-kiss-container">
