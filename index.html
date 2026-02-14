@@ -433,11 +433,45 @@
         max-width: 90%;
         width: 400px;
         transform: scale(0.8);
-        transition: transform 0.3s;
+        transition: transform 0.4s ease; /* Updated transition for celebrate */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       #modal-overlay.show .modal-content {
         transform: scale(1);
       }
+      /* Modal - dynamic content styling */
+      .modal-kiss-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+      .modal-kiss-container img {
+        width: 45%;
+        max-height: 150px;
+        border-radius: 15px;
+        object-fit: cover;
+      }
+      .celebration-gif {
+        width: 80%;
+        max-width: 300px;
+        border-radius: 20px;
+        animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      @keyframes popIn {
+        0% {
+          transform: scale(0.5);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
       .modal-btn {
         background: var(--secondary-color);
         color: white;
@@ -482,6 +516,12 @@
           height: auto;
           max-height: 100px; /* Smaller on mobile */
         }
+
+        /* Modal Adjustments */
+        .modal-kiss-container img {
+          height: auto;
+          max-height: 100px;
+        }
       }
     </style>
   </head>
@@ -494,19 +534,8 @@
 
     <!-- Modal -->
     <div id="modal-overlay">
-      <div class="modal-content">
-        <h3
-          id="modal-text"
-          style="
-            color: var(--accent-color);
-            font-family: &quot;Dancing Script&quot;;
-            font-size: 2rem;
-            margin-bottom: 20px;
-          "
-        >
-          Msg
-        </h3>
-        <button class="modal-btn" onclick="closeModal()">Okay 🥺</button>
+      <div class="modal-content" id="modal-inner">
+        <!-- Content will be injected dynamically via JS -->
       </div>
     </div>
 
@@ -691,7 +720,7 @@
       const activePathLine = document.getElementById("active-path");
       const langBtn = document.getElementById("lang-btn");
       const modalOverlay = document.getElementById("modal-overlay");
-      const modalText = document.getElementById("modal-text");
+      const modalInner = document.getElementById("modal-inner");
       const finalQ = document.getElementById("final-q");
       const yesBtn = document.getElementById("yes-btn");
       const noBtn = document.getElementById("no-btn");
@@ -850,7 +879,15 @@
         e.preventDefault();
         moveNoBtn();
         const msg = noMessages[Math.floor(Math.random() * noMessages.length)];
-        modalText.textContent = msg;
+
+        // Standard modal for "No"
+        modalInner.innerHTML = `
+            <h3 style="color: var(--accent-color); font-family: 'Dancing Script'; font-size: 2rem; margin-bottom: 20px;">
+                ${msg}
+            </h3>
+            <button class="modal-btn" onclick="closeModal()">Okay 🥺</button>
+        `;
+
         modalOverlay.classList.add("show");
       }
 
@@ -858,8 +895,49 @@
         modalOverlay.classList.remove("show");
       }
 
-      function celebrateYes() {
-        // Burst hearts
+      // --- CELEBRATION LOGIC (NEW) ---
+      function showYesCelebration() {
+        // Burst hearts effect
+        createHeartBurst();
+
+        // Step 1: Celebration Modal with Kissing GIFs
+        // Using bubu-giving-kisses-after-yes.gif twice since user asked for the same filename for left/right
+        // or implies left/right are same. If a dudu version existed, I would use that too.
+
+        modalInner.innerHTML = `
+            <div class="modal-kiss-container">
+                <img src="./gifs/bubu-giving-kisses-after-yes.gif" alt="Kissing Left">
+                <img src="./gifs/bubu-giving-kisses-after-yes.gif" alt="Kissing Right">
+            </div>
+            <h3 style="color: var(--accent-color); font-family: 'Dancing Script'; font-size: 2rem; margin-bottom: 10px;">
+                I knew it! I love you so much! 💖
+            </h3>
+            <h3 style="color: var(--accent-color); font-family: 'Dancing Script'; font-size: 1.8rem; margin-bottom: 10px;">
+                 BuBu 💖
+            </h3>
+            <p style="font-size: 1.2rem; margin-bottom: 20px;">Happy Valentine's Day!</p>
+            <button class="modal-btn" onclick="transformToFinalCelebration()">Okay 🥺</button>
+          `;
+
+        modalOverlay.classList.add("show");
+      }
+
+      function transformToFinalCelebration() {
+        // Fade out content first
+        modalInner.style.opacity = "0";
+
+        setTimeout(() => {
+          // Step 2: Final Celebration State (Single Centered GIF)
+          modalInner.innerHTML = `
+                  <img src="./gifs/dudu-celebrating.gif" alt="Celebrating" class="celebration-gif">
+              `;
+
+          // Fade back in
+          modalInner.style.opacity = "1";
+        }, 400); // Wait for fade out
+      }
+
+      function createHeartBurst() {
         for (let i = 0; i < 50; i++) {
           const heart = document.createElement("div");
           heart.innerHTML = "💖";
@@ -881,13 +959,6 @@
 
           setTimeout(() => heart.remove(), 1000);
         }
-
-        // Show alert/message
-        setTimeout(() => {
-          modalText.innerHTML =
-            "I knew it! I Love you so much! <br>💖 BuBu 💖<br>Happy Valentine's Day!";
-          modalOverlay.classList.add("show");
-        }, 1000);
       }
 
       function createHearts() {
@@ -905,7 +976,7 @@
       langBtn.addEventListener("click", toggleLang);
       noBtn.addEventListener("mouseover", moveNoBtn);
       noBtn.addEventListener("click", handleNoClick);
-      yesBtn.addEventListener("click", celebrateYes);
+      yesBtn.addEventListener("click", showYesCelebration);
 
       scrollContainer.addEventListener("scroll", () =>
         requestAnimationFrame(updateScrollPath),
