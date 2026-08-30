@@ -1,7 +1,8 @@
-﻿# 💖 Valentine's Day Interactive Journey
+# 💖 Valentine's Day Interactive Journey
 
 <div align="center">
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://valentinesdaypresentformybubu.netlify.app/)
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 [![CSS3](https://img.shields.io/badge/CSS3_Animations-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![JavaScript](https://img.shields.io/badge/Vanilla_JS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
@@ -10,6 +11,8 @@
 <p align="center">
   <strong>A cinematic, interactive web experience featuring custom CSS glassmorphism, responsive keyframe animations, glowing path transitions, and synchronized background audio.</strong>
 </p>
+
+<h3><a href="https://valentinesdaypresentformybubu.netlify.app/">🌐 Launch Interactive Web Experience</a></h3>
 
 </div>
 
@@ -23,6 +26,7 @@ An interactive digital present created for Valentine's Day to tell our story thr
 
 ## ✨ Features & Technical Highlights
 
+- **🌐 Live Production Deployment:** Hosted and interactive at [valentinesdaypresentformybubu.netlify.app](https://valentinesdaypresentformybubu.netlify.app/).
 - **🌟 Dynamic Glowing Path:** SVG path illumination effects that guide the user step-by-step through interactive milestone cards.
 - **🪟 Modern Glassmorphism UI:** Backdrop blur filters, soft gradient borders, and custom frosted-glass dialog boxes.
 - **🎵 Audio Synchronization:** Background music integration designed to gracefully handle modern browser autoplay policies.
@@ -35,20 +39,20 @@ An interactive digital present created for Valentine's Day to tell our story thr
 - **Markup:** HTML5 Semantic Layout
 - **Styles:** Custom CSS3 (Glassmorphism, Keyframe Animations, Gradients)
 - **Logic:** Vanilla JavaScript (Audio API, DOM Scroll Triggers)
+- **Deployment:** Netlify
 
 ---
 
-## 🚀 Quick Preview
+## 🚀 Local Setup & Preview
 
-To run locally:
-`ash
+```bash
 # 1. Clone the repository
 git clone https://github.com/adarshbam/valentine-day.git
 cd valentine-day
 
 # 2. Open in browser
-# Simply double-click index.html or serve using VS Code Live Server
-`
+# Simply double-click index.html or visit: https://valentinesdaypresentformybubu.netlify.app/
+```
 
 ---
 
