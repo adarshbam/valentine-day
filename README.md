@@ -1,61 +1,44 @@
-# 💖 Valentine's Day Interactive Journey
+# Valentine's Day Journey
 
-<div align="center">
+An interactive Valentine's gift built to tell a personal story through language, scrolling, animation, and music.
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://valentinesdaypresentformybubu.netlify.app/)
-[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
-[![CSS3](https://img.shields.io/badge/CSS3_Animations-1572B6?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![JavaScript](https://img.shields.io/badge/Vanilla_JS-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![License: MIT](https://img.shields.io/badge/License-MIT-pink.svg?style=for-the-badge)](LICENSE)
+**[Open the live experience](https://valentinesdaypresentformybubu.netlify.app/)**
 
-<p align="center">
-  <strong>A cinematic, interactive web experience featuring custom CSS glassmorphism, responsive keyframe animations, glowing path transitions, and synchronized background audio.</strong>
-</p>
+## What it does
 
-<h3><a href="https://valentinesdaypresentformybubu.netlify.app/">🌐 Launch Interactive Web Experience</a></h3>
+- Presents a sequence of story sections inside a scroll-snap container.
+- Switches between English and Hindi copy and the corresponding audio tracks.
+- Updates an SVG path with scroll progress and reveals sections using browser observation.
+- Responds to the final choice with a custom celebration flow.
 
-</div>
+HTML · CSS · JavaScript. This is a personal browser experience, not a commercial service.
 
----
+## How it is organized
 
-## 📖 Story & Context
-
-An interactive digital present created for Valentine's Day to tell our story through interactive animations and audio. Built with custom CSS keyframes, glassmorphism design, and DOM event controllers.
-
----
-
-## ✨ Features & Technical Highlights
-
-- **🌐 Live Production Deployment:** Hosted and interactive at [valentinesdaypresentformybubu.netlify.app](https://valentinesdaypresentformybubu.netlify.app/).
-- **🌟 Dynamic Glowing Path:** SVG path illumination effects that guide the user step-by-step through interactive milestone cards.
-- **🪟 Modern Glassmorphism UI:** Backdrop blur filters, soft gradient borders, and custom frosted-glass dialog boxes.
-- **🎵 Audio Synchronization:** Background music integration designed to gracefully handle modern browser autoplay policies.
-- **📱 Responsive & Touch-Optimized:** Fluid viewport typography and smooth swipe gestures across desktop, tablet, and mobile browsers.
-
----
-
-## 🛠️ Tech Stack
-
-- **Markup:** HTML5 Semantic Layout
-- **Styles:** Custom CSS3 (Glassmorphism, Keyframe Animations, Gradients)
-- **Logic:** Vanilla JavaScript (Audio API, DOM Scroll Triggers)
-- **Deployment:** Netlify
-
----
-
-## 🚀 Local Setup & Preview
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/adarshbam/valentine-day.git
-cd valentine-day
-
-# 2. Open in browser
-# Simply double-click index.html or visit: https://valentinesdaypresentformybubu.netlify.app/
+```mermaid
+flowchart TD
+    HTML[index.html] --> Story[Story and language copy]
+    HTML --> Styles[Inline CSS and layout]
+    HTML --> Events[Inline interaction code]
+    Events --> Scroll[Scroll progress and section observation]
+    Events --> Audio[Language-specific audio]
+    Events --> Ending[Final response and celebration]
 ```
 
----
+The implementation lives in [index.html](index.html), including styles and scripts. [script.js](script.js) is intentionally a stub. Local music files are under [music/](music/); Google Fonts is an external dependency.
 
-<div align="center">
-  <sub>Built with ❤️ and code by <a href="https://github.com/adarshbam">Adarsh Singh</a></sub>
-</div>
+## Run locally
+
+No dependency installation or build is required. Serve the repository root using any static HTTP server. With Python installed:
+
+```sh
+python -m http.server 8080 --bind 127.0.0.1
+```
+
+Open `http://127.0.0.1:8080`. An HTTP preview is preferable to assuming all media/browser behavior is identical under `file://`.
+
+## Review notes
+
+Check both languages, story progression, final-choice behavior, and audio after a user gesture. Browser autoplay policy can prevent sound until interaction. No automated regression suite, measured 60fps claim, or complete accessibility/reduced-motion audit is established by this README.
+
+The site's expressive visual effects belong to this personal gift; documentation uses a quieter structure. No license file is currently included, so the former MIT badge did not establish a repository license. Personal media and third-party assets are not licensed for reuse merely because the source is visible.
